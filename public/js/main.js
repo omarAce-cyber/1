@@ -92,21 +92,79 @@ function createProductCard(product) {
         Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100) : 0;
 
     return `
-        <div class="product-card" onclick="window.location.href='/product.html?id=${product._id}'">
-            <div class="product-image">
+        <div class="product-card">
+            <div class="product-image" onclick="window.location.href='/product.html?id=${product._id}'">
                 <img src="${imageUrl}" alt="${product.name}" loading="lazy">
                 ${discount > 0 ? `<span class="product-badge">-${discount}%</span>` : ''}
                 ${product.totalStock <= 5 ? '<span class="product-badge" style="background:#ffc107">Low Stock</span>' : ''}
             </div>
             <div class="product-info">
-                <h3 class="product-name">${product.name}</h3>
+                <h3 class="product-name" onclick="window.location.href='/product.html?id=${product._id}'">${product.name}</h3>
                 <div class="product-price">
                     <span>$${product.price.toFixed(2)}</span>
                     ${product.comparePrice ? `<span class="product-price-old">$${product.comparePrice.toFixed(2)}</span>` : ''}
                 </div>
+                <div class="product-actions">
+                    <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart('${product._id}')">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
             </div>
         </div>
     `;
+}
+
+// Quick add to cart function for featured products
+function quickAddToCart(productId) {
+    // Check if cart is defined
+    if (typeof cart === 'undefined') {
+        console.error('Cart not initialized');
+        return;
+    }
+
+    // Require login
+    if (!auth.isLoggedIn()) {
+        if (typeof toast !== 'undefined') {
+            toast.warning('Please login to add items to your cart', 'Login Required');
+        } else {
+            alert('Please login to add items to cart');
+        }
+        setTimeout(() => {
+            window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.pathname);
+        }, 1500);
+        return;
+    }
+
+    // Fetch product details and add to cart
+    api.products.getById(productId)
+        .then(data => {
+            const product = data.product;
+            
+            // Get first available size
+            const availableSize = product.sizes.find(s => s.stock > 0);
+            if (!availableSize) {
+                if (typeof toast !== 'undefined') {
+                    toast.error('Product out of stock', 'Out of Stock');
+                } else {
+                    alert('Product out of stock');
+                }
+                return;
+            }
+
+            // Get first available color
+            const color = product.colors && product.colors.length > 0 ? product.colors[0].name : 'Default';
+
+            // Add to cart
+            cart.add(product, availableSize.name, color, 1);
+        })
+        .catch(error => {
+            console.error('Error adding to cart:', error);
+            if (typeof toast !== 'undefined') {
+                toast.error('Failed to add product to cart', 'Error');
+            } else {
+                alert('Failed to add product to cart');
+            }
+        });
 }
 
 // Format Price
