@@ -1,0 +1,52 @@
+<nav class="navbar" id="navbar">
+    <div class="container nav-container">
+        <a href="/" class="logo">NFR</a>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/shop.html" class="nav-link">Shop</a>
+            <a href="/shop.html?category=t-shirts" class="nav-link">T-Shirts</a>
+            <a href="/shop.html?category=hoodies" class="nav-link">Hoodies</a>
+            <a href="/shop.html?category=pants" class="nav-link">Pants</a>
+        </div>
+
+        <div class="nav-actions">
+            <!-- Auth Actions (Login/Register) - Show when NOT logged in -->
+            <div class="auth-actions" style="display: flex;">
+                <a href="/login.html" class="btn-secondary">Login</a>
+                <a href="/register.html" class="btn-primary">Register</a>
+            </div>
+
+            <!-- User Menu - Show when logged in -->
+            <div class="user-menu" style="display: none;">
+                <a href="/cart.html" class="nav-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="user-dropdown">
+                    <button class="user-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="user-name">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="/orders.html" class="dropdown-item">
+                            <i class="fas fa-box"></i> My Orders
+                        </a>
+                        <a href="/admin.html" class="dropdown-item admin-only" style="display: none;">
+                            <i class="fas fa-shield-alt"></i> Admin Dashboard
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" id="logoutBtn" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</nav>

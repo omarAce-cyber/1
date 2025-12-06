@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - NFR</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">NFR</a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/shop.html" class="nav-link">Shop</a>
+                <a href="/shop.html?category=t-shirts" class="nav-link">T-Shirts</a>
+                <a href="/shop.html?category=hoodies" class="nav-link">Hoodies</a>
+                <a href="/shop.html?category=pants" class="nav-link">Pants</a>
+            </div>
+
+             <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="/cart.html" class="icon-btn cart-btn active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <button class="icon-btn" id="userBtn">
+                    <i class="fas fa-user"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Shopping Cart</h1>
+            <p>Review your items before checkout</p>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-container">
+        <div class="container">
+            <div class="cart-layout" id="cartLayout">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>NFR</h3>
+                    <p>Premium streetwear brand delivering quality and style.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <a href="/shop.html?category=t-shirts">T-Shirts</a>
+                    <a href="/shop.html?category=hoodies">Hoodies</a>
+                    <a href="/shop.html?category=pants">Pants</a>
+                    <a href="/shop.html">All Products</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">Returns</a>
+                    <a href="#">Size Guide</a>
+                    <a href="#">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on new arrivals and exclusive offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit" class="btn btn-secondary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 NFR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/config.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/auth.js"></script>
+    <script>
+        // Cart Page Specific Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user is logged in
+            if (!auth.isLoggedIn()) {
+                if (typeof toast !== 'undefined') {
+                    toast.warning('Please login to view your cart', 'Login Required');
+                }
+                setTimeout(() => {
+                    window.location.href = '/login.html?redirect=/cart.html';
+                }, 1500);
+                return;
+            }
+
+            displayCart();
+            updateCartCount();
+        });
+
+        function displayCart() {
+            const cartLayout = document.getElementById('cartLayout');
+            const items = cart.items;
+
+            if (items.length === 0) {
+                cartLayout.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h2>Your cart is empty</h2>
+                        <p>Add some products to get started</p>
+                        <a href="/shop.html" class="btn btn-primary">Continue Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const subtotal = cart.getTotal();
+            const shipping = subtotal >= 100 ? 0 : 10;
+            const total = subtotal + shipping;
+
+            cartLayout.innerHTML = `
+                <div class="cart-items">
+                    <h2>Cart Items (${items.length})</h2>
+                    ${items.map((item, index) => {
+                        const primaryImage = item.product.images.find(img => img.isPrimary) || item.product.images[0];
+                        return `
+                            <div class="cart-item">
+                                <div class="item-image">
+                                    <img src="${primaryImage?.url}" alt="${item.product.name}">
+                                </div>
+                                <div class="item-details">
+                                    <h3>${item.product.name}</h3>
+                                    <p class="item-options">Size: ${item.size} | Color: ${item.color}</p>
+                                    <p class="item-price">$${item.product.price.toFixed(2)}</p>
+                                </div>
+                                <div class="item-quantity">
+                                    <button onclick="cart.update('${item.product._id}', '${item.size}', '${item.color}', ${item.quantity - 1}); displayCart();">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <span>${item.quantity}</span>
+                                    <button onclick="cart.update('${item.product._id}', '${item.size}', '${item.color}', ${item.quantity + 1}); displayCart();">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="item-total">
+                                    $${(item.product.price * item.quantity).toFixed(2)}
+                                </div>
+                                <button class="item-remove" onclick="cart.remove('${item.product._id}', '${item.size}', '${item.color}'); displayCart();">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span>$${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span>${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span>
+                    </div>
+                    ${shipping === 0 ? '' : `
+                        <div class="free-shipping-notice">
+                            <i class="fas fa-truck"></i>
+                            Add $${(100 - subtotal).toFixed(2)} more for free shipping
+                        </div>
+                    `}
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span>$${total.toFixed(2)}</span>
+                    </div>
+                    <a href="/checkout.html" class="btn btn-primary btn-block">
+                        Proceed to Checkout
+                    </a>
+                    <a href="/shop.html" class="btn btn-secondary btn-block">
+                        Continue Shopping
+                    </a>
+                </div>
+            `;
+        }
+
+        function updateCartCount() {
+            const count = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+    </script>
+</body>
+</html>

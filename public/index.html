@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFR - Premium Streetwear Brand</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="container nav-container">
+        <a href="/" class="logo">NFR</a>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/shop.html" class="nav-link">Shop</a>
+            <a href="/shop.html?category=t-shirts" class="nav-link">T-Shirts</a>
+            <a href="/shop.html?category=hoodies" class="nav-link">Hoodies</a>
+            <a href="/shop.html?category=pants" class="nav-link">Pants</a>
+        </div>
+
+       <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="/cart.html" class="icon-btn cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <button class="icon-btn" id="userBtn">
+                    <i class="fas fa-user"></i>
+                </button>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+        </div>
+    </nav>
+
+    <!-- User Dropdown -->
+    <div class="user-dropdown" id="userDropdown">
+        <div class="user-info" id="userInfo"></div>
+        <div class="dropdown-links" id="dropdownLinks"></div>
+    </div>
+</nav>
+
+
+    <!-- User Dropdown -->
+    <div class="user-dropdown" id="userDropdown">
+        <div class="user-info" id="userInfo"></div>
+        <div class="dropdown-links" id="dropdownLinks"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('img/1.jpg')">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">NFR Collection</h1>
+                        <p class="hero-subtitle">Premium Streetwear Designed for You</p>
+                        <a href="/shop.html" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../img/1.jpg')">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">New Arrivals</h1>
+                        <p class="hero-subtitle">Discover Our Latest Designs</p>
+                        <a href="/shop.html?featured=true" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="hero-arrow hero-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="hero-arrow hero-next"><i class="fas fa-chevron-right"></i></button>
+    </section>
+
+    <!-- Promo Banner -->
+    <div class="promo-banner">
+        <div class="promo-scroll">
+            <span>🔥 20% OFF on all T-shirts! &nbsp;&nbsp;&nbsp;</span>
+            <span>🚚 Free shipping on orders over $100 &nbsp;&nbsp;&nbsp;</span>
+            <span>✨ New Collection Available Now &nbsp;&nbsp;&nbsp;</span>
+            <span>🔥 20% OFF on all T-shirts! &nbsp;&nbsp;&nbsp;</span>
+            <span>🚚 Free shipping on orders over $100 &nbsp;&nbsp;&nbsp;</span>
+            <span>✨ New Collection Available Now &nbsp;&nbsp;&nbsp;</span>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Products</h2>
+                <a href="/shop.html?featured=true" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-grid" id="featuredProducts">
+                <div class="loading">Loading products...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <a href="/shop.html?category=t-shirts" class="category-card">
+                    <img src="../img/1.jpg" alt="T-Shirts">
+                    <div class="category-overlay">
+                        <h3>T-Shirts</h3>
+                    </div>
+                </a>
+                <a href="/shop.html?category=hoodies" class="category-card">
+                    <img src="../img/image (49).jpg" alt="Hoodies">
+                    <div class="category-overlay">
+                        <h3>Hoodies</h3>
+                    </div>
+                </a>
+                <a href="/shop.html?category=pants" class="category-card">
+                    <img src="../img/image (8).jpg" alt="Pants">
+                    <div class="category-overlay">
+                        <h3>Pants</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About NFR</h2>
+                    <p>NFR is a premium streetwear brand dedicated to bringing you the finest quality apparel. Our designs blend modern aesthetics with timeless style, creating pieces that stand out.</p>
+                    <p>Every product is crafted with attention to detail and made from premium materials to ensure both comfort and durability.</p>
+                </div>
+                <div class="about-image">
+                    <img src="../img/1.jpg" alt="NFR Brand">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>NFR</h3>
+                    <p>Premium streetwear brand delivering quality and style.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <a href="/shop.html?category=t-shirts">T-Shirts</a>
+                    <a href="/shop.html?category=hoodies">Hoodies</a>
+                    <a href="/shop.html?category=pants">Pants</a>
+                    <a href="/shop.html">All Products</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">Returns</a>
+                    <a href="#">Size Guide</a>
+                    <a href="#">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on new arrivals and exclusive offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="email" required>
+                        <button type="submit" class="btn btn-secondary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 NFR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/toast.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

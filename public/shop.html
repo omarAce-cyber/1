@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - NFR</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">NFR</a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/shop.html" class="nav-link active">Shop</a>
+                <a href="/shop.html?category=t-shirts" class="nav-link">T-Shirts</a>
+                <a href="/shop.html?category=hoodies" class="nav-link">Hoodies</a>
+                <a href="/shop.html?category=pants" class="nav-link">Pants</a>
+            </div>
+
+            <div class="nav-actions">
+                <!-- Auth Actions (Login/Register) - Show when NOT logged in -->
+                <div class="auth-actions" style="display: flex;">
+                    <a href="/login.html" class="btn-secondary">Login</a>
+                    <a href="/register.html" class="btn-primary">Register</a>
+                </div>
+
+                <!-- User Menu - Show when logged in -->
+                <div class="user-menu" style="display: none;">
+                    <a href="/cart.html" class="nav-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <div class="user-dropdown">
+                        <button class="user-btn">
+                            <i class="fas fa-user-circle"></i>
+                            <span class="user-name">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="/orders.html" class="dropdown-item">
+                                <i class="fas fa-box"></i> My Orders
+                            </a>
+                            <a href="/admin.html" class="dropdown-item admin-only" style="display: none;">
+                                <i class="fas fa-shield-alt"></i> Admin Dashboard
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" id="logoutBtn" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Shop</h1>
+            <p>Discover our premium streetwear collection</p>
+        </div>
+    </div>
+
+    <!-- Shop Content -->
+    <div class="shop-container">
+        <div class="container">
+            <div class="shop-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar" id="filtersSidebar">
+                    <div class="filters-header">
+                        <h3>Filters</h3>
+                        <button class="clear-filters" id="clearFilters">Clear All</button>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="filter-group">
+                        <h4>Category</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="" checked>
+                                <span>All Products</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="t-shirts">
+                                <span>T-Shirts</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="hoodies">
+                                <span>Hoodies</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="pants">
+                                <span>Pants</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="accessories">
+                                <span>Accessories</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="filter-group">
+                        <h4>Price Range</h4>
+                        <div class="price-inputs">
+                            <input type="number" id="minPrice" placeholder="Min" min="0">
+                            <span>-</span>
+                            <input type="number" id="maxPrice" placeholder="Max" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Size Filter -->
+                    <div class="filter-group">
+                        <h4>Size</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" name="size" value="XS">
+                                <span>XS</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="size" value="S">
+                                <span>S</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="size" value="M">
+                                <span>M</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="size" value="L">
+                                <span>L</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="size" value="XL">
+                                <span>XL</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" name="size" value="XXL">
+                                <span>XXL</span>
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Products Section -->
+                <div class="products-section">
+                    <!-- Toolbar -->
+                    <div class="shop-toolbar">
+                        <div class="toolbar-left">
+                            <button class="filter-toggle" id="filterToggle">
+                                <i class="fas fa-filter"></i> Filters
+                            </button>
+                            <span class="results-count" id="resultsCount">0 products</span>
+                        </div>
+                        <div class="toolbar-right">
+                            <select id="sortSelect" class="sort-select">
+                                <option value="">Default</option>
+                                <option value="price-asc">Price: Low to High</option>
+                                <option value="price-desc">Price: High to Low</option>
+                                <option value="name-asc">Name: A to Z</option>
+                                <option value="name-desc">Name: Z to A</option>
+                                <option value="newest">Newest First</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid" id="productsGrid">
+                        <div class="loading">Loading products...</div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>NFR</h3>
+                    <p>Premium streetwear brand delivering quality and style.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <a href="/shop.html?category=t-shirts">T-Shirts</a>
+                    <a href="/shop.html?category=hoodies">Hoodies</a>
+                    <a href="/shop.html?category=pants">Pants</a>
+                    <a href="/shop.html">All Products</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">Returns</a>
+                    <a href="#">Size Guide</a>
+                    <a href="#">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on new arrivals and exclusive offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit" class="btn btn-secondary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 NFR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/config.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/shop.js"></script>
+</body>
+</html>
