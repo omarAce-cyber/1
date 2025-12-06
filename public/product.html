@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - NFR</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">NFR</a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/shop.html" class="nav-link">Shop</a>
+                <a href="/shop.html?category=t-shirts" class="nav-link">T-Shirts</a>
+                <a href="/shop.html?category=hoodies" class="nav-link">Hoodies</a>
+                <a href="/shop.html?category=pants" class="nav-link">Pants</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="/cart.html" class="icon-btn cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <button class="icon-btn" id="userBtn">
+                    <i class="fas fa-user"></i>
+                </button>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- User Dropdown -->
+    <div class="user-dropdown" id="userDropdown">
+        <div class="user-info" id="userInfo"></div>
+        <div class="dropdown-links" id="dropdownLinks"></div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="/">Home</a>
+            <span>/</span>
+            <a href="/shop.html">Shop</a>
+            <span>/</span>
+            <span id="breadcrumbProduct">Product</span>
+        </div>
+    </div>
+
+    <!-- Product Detail -->
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="product-detail" id="productDetail">
+                <div class="loading">Loading product...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products-section">
+        <div class="container">
+            <h2 class="section-title">You May Also Like</h2>
+            <div class="products-grid" id="relatedProducts"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>NFR</h3>
+                    <p>Premium streetwear brand delivering quality and style.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <a href="/shop.html?category=t-shirts">T-Shirts</a>
+                    <a href="/shop.html?category=hoodies">Hoodies</a>
+                    <a href="/shop.html?category=pants">Pants</a>
+                    <a href="/shop.html">All Products</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <a href="#">Shipping Info</a>
+                    <a href="#">Returns</a>
+                    <a href="#">Size Guide</a>
+                    <a href="#">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on new arrivals and exclusive offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit" class="btn btn-secondary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 NFR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/config.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/product.js"></script>
+</body>
+</html>

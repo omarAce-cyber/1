@@ -30,6 +30,12 @@ class Auth {
             localStorage.setItem('user', JSON.stringify(data.user));
             
             this.initializeUI();
+            
+            // Dispatch event after login
+            window.dispatchEvent(new CustomEvent('authStateChanged', { 
+                detail: { isLoggedIn: true, user: data.user } 
+            }));
+            
             return { success: true, user: data.user };
         } catch (error) {
             return { success: false, error: error.message };
@@ -59,6 +65,11 @@ class Auth {
         
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        
+        // Dispatch event before logout redirect
+        window.dispatchEvent(new CustomEvent('authStateChanged', { 
+            detail: { isLoggedIn: false, user: null } 
+        }));
         
         window.location.href = '/';
     }
@@ -139,6 +150,11 @@ class Auth {
                 </a>
             `;
         }
+        
+        // Trigger auth state change event
+        window.dispatchEvent(new CustomEvent('authStateChanged', { 
+            detail: { isLoggedIn: this.isLoggedIn(), user: this.user } 
+        }));
     }
 
     requireAuth(redirectToLogin = true) {

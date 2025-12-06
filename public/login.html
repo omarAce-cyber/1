@@ -42,116 +42,76 @@
     </div>
 
     <script src="/js/api.js"></script>
-<script src="/js/toast.js"></script>
-<script src="/js/auth.js"></script>
-<script>
-    // If already logged in, redirect
-    if (auth.isLoggedIn()) {
-        if (auth.isAdmin()) {
-            window.location.href = '/admin.html';
-        } else {
-            window.location.href = '/';
-        }
-    }
-
-    // Handle login form
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-        submitBtn.disabled = true;
-
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-
-        try {
-            const result = await auth.login(email, password);
-            
-            if (result.success) {
-                toast.success(`Welcome back, ${result.user.name}!`, 'Login Successful');
-                
-                // Redirect based on role
-                setTimeout(() => {
-                    if (result.user.role === 'admin') {
-                        window.location.href = '/admin.html';
-                    } else {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const redirect = urlParams.get('redirect') || '/';
-                        window.location.href = decodeURIComponent(redirect);
-                    }
-                }, 1000);
+    <script src="/js/toast.js"></script>
+    <script src="/js/auth.js"></script>
+    <script>
+        // If already logged in, redirect
+        if (auth.isLoggedIn()) {
+            if (auth.isAdmin()) {
+                window.location.href = '/admin.html';
             } else {
-                toast.error(result.error || 'Invalid email or password', 'Login Failed');
+                window.location.href = '/';
+            }
+        }
+
+        // Handle login form
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            submitBtn.disabled = true;
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const result = await auth.login(email, password);
+                
+                if (result.success) {
+                    toast.success(`Welcome back, ${result.user.name}!`, 'Login Successful');
+                    
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (result.user.role === 'admin') {
+                            window.location.href = '/admin.html';
+                        } else {
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const redirect = urlParams.get('redirect') || '/';
+                            window.location.href = decodeURIComponent(redirect);
+                        }
+                    }, 1000);
+                } else {
+                    toast.error(result.error || 'Invalid email or password', 'Login Failed');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                toast.error(error.message || 'Something went wrong. Please try again.', 'Login Failed');
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
-        } catch (error) {
-            toast.error(error.message || 'Something went wrong. Please try again.', 'Login Failed');
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }
-    });
-
-    // Toggle password visibility
-    const togglePassword = document.querySelector('.toggle-password');
-    if (togglePassword) {
-        togglePassword.addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
         });
-    }
-</script>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Logging in...';
-    submitBtn.disabled = true;
 
-    const formData = {
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-    };
-
-    try {
-        const result = await auth.login(formData.email, formData.password);
-        
-        if (result.success) {
-            // Check if admin
-            if (result.user.role === 'admin') {
-                window.location.href = '/admin.html';
-            } else {
-                // Check for redirect parameter
-                const urlParams = new URLSearchParams(window.location.search);
-                const redirect = urlParams.get('redirect') || '/';
-                window.location.href = redirect;
-            }
-        } else {
-            alert(result.error || 'Login failed');
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
+        // Toggle password visibility
+        const togglePassword = document.querySelector('.toggle-password');
+        if (togglePassword) {
+            togglePassword.addEventListener('click', function() {
+                const passwordInput = document.getElementById('password');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
         }
-    } catch (error) {
-        alert('Login failed: ' + error.message);
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-});
-
     </script>
 </body>
 </html>
