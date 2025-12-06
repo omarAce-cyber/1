@@ -246,6 +246,7 @@ function toggleFilters() {
 
 // Update cart count
 function updateCartCount() {
-    const count = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById('cartCount').textContent = count;
+    if (typeof cart !== 'undefined') {
+        cart.updateCount();
+    }
 }

@@ -19,30 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateCartCount();
 });
 
-// Add to Cart
-addToCartBtn.addEventListener('click', () => {
-    // Require login
-    if (!auth.isLoggedIn()) {
-        toast.warning('Please login to add items to your cart', 'Login Required');
-        setTimeout(() => {
-            window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.href);
-        }, 1500);
-        return;
-    }
-
-    if (!selectedSize) {
-        toast.warning('Please select a size', 'Size Required');
-        return;
-    }
-
-    if (!selectedColor) {
-        toast.warning('Please select a color', 'Color Required');
-        return;
-    }
-
-    cart.add(currentProduct, selectedSize, selectedColor, quantity);
-    toast.success(`${currentProduct.name} added to your cart!`, 'Added to Cart');
-});
+// Note: Add to Cart button handlers are defined in the HTML template below
 
 // Load product
 async function loadProduct(productId) {
@@ -260,13 +237,32 @@ function decreaseQuantity() {
 
 // Add to cart
 function addToCart() {
+    // Require login
+    if (!auth.isLoggedIn()) {
+        if (typeof toast !== 'undefined') {
+            toast.warning('Please login to add items to your cart', 'Login Required');
+        }
+        setTimeout(() => {
+            window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.href);
+        }, 1500);
+        return;
+    }
+
     if (!selectedSize) {
-        alert('Please select a size');
+        if (typeof toast !== 'undefined') {
+            toast.warning('Please select a size', 'Size Required');
+        } else {
+            alert('Please select a size');
+        }
         return;
     }
 
     if (currentProduct.colors && currentProduct.colors.length > 0 && !selectedColor) {
-        alert('Please select a color');
+        if (typeof toast !== 'undefined') {
+            toast.warning('Please select a color', 'Color Required');
+        } else {
+            alert('Please select a color');
+        }
         return;
     }
 
@@ -274,7 +270,11 @@ function addToCart() {
     updateCartCount();
     
     // Show success message
-    alert('Product added to cart!');
+    if (typeof toast !== 'undefined') {
+        toast.success(`${currentProduct.name} added to your cart!`, 'Added to Cart');
+    } else {
+        alert('Product added to cart!');
+    }
 }
 
 // Buy now
@@ -331,6 +331,25 @@ async function loadRelatedProducts() {
 
 // Update cart count
 function updateCartCount() {
-    const count = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById('cartCount').textContent = count;
+    if (typeof cart !== 'undefined') {
+        cart.updateCount();
+    }
+}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('relatedProducts').innerHTML = html;
+
+    } catch (error) {
+        console.error('Error loading related products:', error);
+    }
+}
+
+// Update cart count
+function updateCartCount() {
+    if (typeof cart !== 'undefined') {
+        cart.updateCount();
+    }
 }
